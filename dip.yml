@@ -8,7 +8,7 @@ environment:
 compose:
   files:
     - .dockerdev/compose.yaml
-  project_name: rails7_react_crud_tutorial
+  project_name: event_manager_esbuild
 
 interaction:
   # This command spins up a Rails container with the requried dependencies (such as databases),
@@ -86,12 +86,9 @@ interaction:
     command: yarn
     compose_run_options: [no-deps]
 
-  lint:
-    description: Run ESLint with Airbnb rules
-    service: rails
-    command: npm run lint
-
 provision:
-  - dip compose down --volumes
-  - /bin/bash -c "rm -rf tmp/*"
-  - dip sh -c bin/setup
+  - dip bundle install
+  - dip rails new . -j esbuild –f --skip-git --no-skip-gemfile
+  - dip npm i react react-dom
+
+
